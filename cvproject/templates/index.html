@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="header">
+        <h1>AI-Powered Fitness Tracker</h1>
+        <p>Choose your exercise and let the camera guide your workout!</p>
+    </div>
+
+    <form action="{{ url_for('start_exercise') }}" method="post" class="exercise-form">
+        <h2>Select an Exercise:</h2>
+        <div class="exercise-options">
+            <label class="exercise-option">
+                <input type="radio" name="exercise" value="curls" required>
+                <span>Bicep Curls</span>
+            </label>
+            <label class="exercise-option">
+                <input type="radio" name="exercise" value="pushups">
+                <span>Hand lifting</span>
+            </label>
+            <label class="exercise-option">
+                <input type="radio" name="exercise" value="squats">
+                <span>Knee raises</span>
+            </label>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn-primary">Start Exercise</button>
+            <button type="button" class="btn-secondary" onclick="stopCamera()">Stop Camera</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function stopCamera() {
+        fetch('/stop', { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Camera Stopped');
+                } else {
+                    alert('Error stopping camera');
+                }
+            });
+    }
+</script>
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: url('https://wallpapers.com/images/hd/data-background-jtv70rf89mnajvm2.jpg') no-repeat center center fixed;
+        background-size: cover;
+        color: #333;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .header h1 {
+        font-size: 2.5rem;
+        margin: 0;
+        color: #4CAF50;
+    }
+
+    .header p {
+        font-size: 1.2rem;
+        color: #666;
+    }
+
+    .exercise-form h2 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+
+    .exercise-options {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .exercise-option {
+        display: flex;
+        align-items: center;
+        font-size: 1.2rem;
+        padding: 10px;
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background 0.3s, border-color 0.3s;
+    }
+
+    .exercise-option:hover {
+        background: #e8f5e9;
+        border-color: #4CAF50;
+    }
+
+    .exercise-option input {
+        margin-right: 10px;
+    }
+
+    .form-actions {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+    .btn-primary {
+        background: #4CAF50;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .btn-primary:hover {
+        background: #45A049;
+    }
+
+    .btn-secondary {
+        background: #f44336;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .btn-secondary:hover {
+        background: #e53935;
+    }
+</style>
+{% endblock %}
